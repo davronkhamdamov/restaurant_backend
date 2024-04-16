@@ -1,3 +1,4 @@
+import hashlib
 from datetime import datetime
 from uuid import UUID
 
@@ -19,7 +20,7 @@ def create_staff(db: Session, staff: Staff_schema):
         name=staff.name,
         surname=staff.surname,
         login=staff.login,
-        password=staff.password,
+        password=hashlib.sha256(staff.password.encode()).hexdigest(),
         role=staff.role,
     )
     db.add(_staff)

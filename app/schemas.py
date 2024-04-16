@@ -1,5 +1,4 @@
-import datetime
-
+from datetime import datetime
 from pydantic import BaseModel
 from typing import Optional, TypeVar, Generic
 
@@ -24,6 +23,41 @@ class Staff_schema(BaseModel):
     surname: str
     login: str
     password: str
-    role: str
-    create_at: datetime.datetime = None
-    updated_at: datetime.datetime = None
+    role: str = None
+    create_at: datetime = None
+    updated_at: datetime = None
+
+
+class Products(BaseModel):
+    id: str = None
+    name: str
+    price: str
+    weight: str
+    created_at: str = None
+    updated_at: str = None
+
+
+class Meats(BaseModel):
+    id: str
+    name: str
+    price: str
+    created_at: str = None
+    updated_at: str = None
+
+
+class Orders(BaseModel):
+    id: str
+    order_id: str
+    status: str
+    price: str
+    meat_id: str
+    created_at: str = None
+    updated_at: str = None
+
+
+class Needed_products(BaseModel):
+    id: str
+    product_id: str
+    meat_id: str
+    created_at: str = None
+    updated_at: str = None
