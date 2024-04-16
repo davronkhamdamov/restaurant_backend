@@ -25,6 +25,7 @@ class Products(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String, index=True, nullable=False)
     price = Column(Integer, nullable=False)
+    img_url = Column(String)
     weight = Column(Integer, nullable=False)
     created_at = Column(DateTime, default=datetime.datetime.now)
     updated_at = Column(DateTime)
@@ -36,6 +37,7 @@ class Meats(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String, index=True, nullable=False)
     price = Column(Integer, nullable=False)
+    img_url = Column(String)
     created_at = Column(DateTime, default=datetime.datetime.now)
     updated_at = Column(DateTime)
 

@@ -15,7 +15,7 @@ from app.api.staffs.crud import (
 router = APIRouter()
 
 
-@router.get("/{user_id}")
+@router.get("/{staff_id}")
 async def get_staff_by_id_route(
     staff_id: UUID,
     db: Session = Depends(get_db),
