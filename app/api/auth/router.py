@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.api.auth.crud import get_staff_from_by_login, validate_password
-from app.api.schemas import LoginSchema, Response
+from app.schemas import Login_schema, Response
 from app.db import get_db
 from app.utils.auth_middleware import create_access_token
 from app.utils.constants import ACCESS_TOKEN_EXPIRE_MINUTES
@@ -13,7 +13,7 @@ router = APIRouter()
 
 
 @router.post("/login")
-async def login(staff: LoginSchema, db: Session = Depends(get_db)):
+async def login(staff: Login_schema, db: Session = Depends(get_db)):
     _current_staff = get_staff_from_by_login(db=db, login=staff.login)
     if not _current_staff:
         raise HTTPException(status_code=401, detail="Bunday xodim topilmadi")

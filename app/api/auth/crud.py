@@ -2,7 +2,7 @@ import hashlib
 
 from sqlalchemy.orm import Session
 
-from app.api.models import Staffs
+from app.models import Staffs
 
 
 def get_staff_from_by_login(db: Session, login: str):
