@@ -1,6 +1,7 @@
 from datetime import datetime
 from pydantic import BaseModel
 from typing import Optional, TypeVar, Generic
+from uuid import UUID
 
 T = TypeVar("T")
 
@@ -28,8 +29,8 @@ class Staff_schema(BaseModel):
     updated_at: datetime = None
 
 
-class Products(BaseModel):
-    id: str = None
+class Products_schema(BaseModel):
+    id: UUID = None
     name: str
     price: str
     weight: str
@@ -37,27 +38,27 @@ class Products(BaseModel):
     updated_at: str = None
 
 
-class Meats(BaseModel):
-    id: str
+class Meats_schema(BaseModel):
+    id: UUID
     name: str
     price: str
     created_at: str = None
     updated_at: str = None
 
 
-class Orders(BaseModel):
-    id: str
+class Orders_schema(BaseModel):
+    id: UUID
     order_id: str
     status: str
     price: str
-    meat_id: str
+    meat_id: UUID
     created_at: str = None
     updated_at: str = None
 
 
-class Needed_products(BaseModel):
-    id: str
-    product_id: str
-    meat_id: str
+class Needed_product_schema(BaseModel):
+    id: UUID = None
+    product_id: UUID
+    meat_id: UUID
     created_at: str = None
     updated_at: str = None

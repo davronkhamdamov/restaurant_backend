@@ -24,8 +24,8 @@ class Products(Base):
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String, index=True, nullable=False)
-    price: Column(Integer, nullable=False)
-    weight: Column(Integer, nullable=False)
+    price = Column(Integer, nullable=False)
+    weight = Column(Integer, nullable=False)
     created_at = Column(DateTime, default=datetime.datetime.now)
     updated_at = Column(DateTime)
 
@@ -47,6 +47,7 @@ class Orders(Base):
     order_id = Column(Integer, autoincrement=True)
     status = Column(String, default="Kutilmoqda")
     price = Column(Integer, nullable=False)
+    staff_id = Column(UUID, ForeignKey("staffs.id"))
     meat_id = Column(UUID, ForeignKey("meats.id"))
     created_at = Column(DateTime, default=datetime.datetime.now)
     updated_at = Column(DateTime)
@@ -58,6 +59,7 @@ class Needed_products(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     product_id = Column(UUID, ForeignKey("products.id"))
     meat_id = Column(UUID, ForeignKey("meats.id"))
+    weight = Column(Integer, nullable=False)
     created_at = Column(DateTime, default=datetime.datetime.now)
     updated_at = Column(DateTime)
 
