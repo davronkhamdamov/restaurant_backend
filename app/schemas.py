@@ -1,3 +1,5 @@
+import datetime
+
 from pydantic import BaseModel
 from typing import Optional, TypeVar, Generic
 
@@ -14,3 +16,14 @@ class Response(BaseModel, Generic[T]):
     status: str
     message: str
     result: Optional[T]
+
+
+class Staff_schema(BaseModel):
+    id: str = None
+    name: str
+    surname: str
+    login: str
+    password: str
+    role: str
+    create_at: datetime.datetime = None
+    updated_at: datetime.datetime = None
