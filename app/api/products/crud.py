@@ -3,7 +3,7 @@ from uuid import UUID
 
 from sqlalchemy.orm import Session
 from app.models import Products
-from app.schemas import Products_schema
+from app.schemas import Products_schema, Products_weight_schema
 
 
 def get_products(db: Session):
@@ -18,6 +18,7 @@ def create_product(db: Session, product: Products_schema):
     _product = Products(
         name=product.name,
         price=product.price,
+        img_url=product.img_url,
         weight=product.weight,
         created_at=datetime.now(),
     )
@@ -39,4 +40,15 @@ def update_product(db: Session, product_id: UUID, product: Products_schema):
     _product.price = product.price
     _product.weight = product.weight
     _product.updated_at = datetime.now()
+    db.commit()
+    return
+
+
+def update_product_weight(
+    db: Session, product_id: UUID, product_weight: Products_weight_schema
+):
+    _product = get_product_by_id(db, product_id)
+    _product.weight += product_weight.weight
+    _product.updated_at = datetime.now()
+    db.commit()
     return

@@ -66,4 +66,4 @@ class Needed_products(Base):
     updated_at = Column(DateTime)
 
 
-# Base.metadata.create_all(bin(engine))
+Base.metadata.create_all(bind=engine)

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from uuid import UUID
 from app.db import get_db
-from app.schemas import Response, Products_schema
+from app.schemas import Response, Products_schema, Products_weight_schema
 from app.utils.auth_middleware import get_current_staff
 from app.api.products.crud import (
     get_product_by_id,
@@ -10,6 +10,7 @@ from app.api.products.crud import (
     create_product,
     delete_product,
     update_product,
+    update_product_weight,
 )
 
 router = APIRouter()
@@ -30,6 +31,9 @@ async def get_product_by_id_route(
 @router.get("/")
 def get_all_products_route(db: Session = Depends(get_db), _=Depends(get_current_staff)):
     _products = get_products(db)
+    return Response(
+        code=200, status="ok", message="success", result=_products
+    ).model_dump()
 
 
 @router.post("/")
@@ -42,15 +46,23 @@ def create_product_route(
     return Response(code=201, status="ok", message="created").model_dump()
 
 
-()
-
-
-@router.delete("/")
+@router.delete("/{product_id}")
 def delete_product_rout(
     product_id: UUID, db: Session = Depends(get_db), _=Depends(get_current_staff)
 ):
     delete_product(db, product_id)
     return Response(code=200, status="ok", message="deleted")
+
+
+@router.put("/weight/{product_id}")
+def update_product_rout(
+    product_id: UUID,
+    product_weight: Products_weight_schema,
+    db: Session = Depends(get_db),
+    _=Depends(get_current_staff),
+):
+    update_product_weight(db, product_id, product_weight)
+    return Response(code=200, status="ok", message="updated")
 
 
 @router.put("/{product_id}")

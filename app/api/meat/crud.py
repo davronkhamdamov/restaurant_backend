@@ -18,6 +18,7 @@ def create_meat(db: Session, meat: Meats_schema):
     _meat = Meats(
         name=meat.name,
         price=meat.price,
+        img_url=meat.img_url,
         created_at=datetime.now(),
     )
     db.add(_meat)

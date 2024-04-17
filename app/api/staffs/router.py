@@ -30,6 +30,9 @@ async def get_staff_by_id_route(
 @router.get("/")
 def get_all_staffs_route(db: Session = Depends(get_db), _=Depends(get_current_staff)):
     _staffs = get_staffs(db)
+    return Response(
+        code=200, status="ok", message="success", result=_staffs
+    ).model_dump()
 
 
 @router.post("/")
@@ -39,13 +42,10 @@ def create_staff_route(
     _=Depends(get_current_staff),
 ):
     create_staff(db, staff)
-    return Response(code=201, status="ok", message="created").model_dump()
+    return Response(code=201, status="ok", message="created")
 
 
-()
-
-
-@router.delete("/")
+@router.delete("/{staff_id}")
 def delete_staff_rout(
     staff_id: UUID, db: Session = Depends(get_db), _=Depends(get_current_staff)
 ):

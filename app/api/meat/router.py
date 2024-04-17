@@ -28,6 +28,9 @@ async def get_meat_by_id_route(
 @router.get("/")
 def get_all_meats_route(db: Session = Depends(get_db), _=Depends(get_current_staff)):
     _meats = get_meats(db)
+    return Response(
+        code=200, status="ok", message="success", result=_meats
+    ).model_dump()
 
 
 @router.post("/")
@@ -40,7 +43,7 @@ def create_meat_route(
     return Response(code=201, status="ok", message="created").model_dump()
 
 
-@router.delete("/")
+@router.delete("/{meat_id}")
 def delete_meat_rout(
     meat_id: UUID, db: Session = Depends(get_db), _=Depends(get_current_staff)
 ):
