@@ -13,6 +13,8 @@ from app.api.orders.crud import (
     delete_order,
     update_order,
 )
+from app.api.products.crud import update_product_weight_for_order, get_product_by_id
+from app.api.needed_products.crud import get_needed_product_by_meat_id
 
 router = APIRouter()
 
@@ -52,11 +54,30 @@ def get_all_orders_route(
 
 @router.post("/")
 def create_order_route(
-    order: List[Orders_schema],
+    orders: List[Orders_schema],
     db: Session = Depends(get_db),
     current_staff: dict = Depends(get_current_staff),
 ):
-    create_order(db, order, staff_id=current_staff["id"])
+    for order in orders:
+        needed_products = get_needed_product_by_meat_id(db, order.meat_id)
+        not_enough_products = []
+        for needed_product in needed_products:
+            product = get_product_by_id(db, needed_product.product_id)
+            if product.weight < (needed_product.weight * order.count):
+                not_enough_products.append(product)
+
+            update_product_weight_for_order(
+                db, product.id, product.weight - (needed_product.weight * order.count)
+            )
+        if not_enough_products:
+            return Response(
+                code=409,
+                status="error",
+                message="not enough",
+                result=not_enough_products,
+            ).model_dump()
+    create_order(db, orders, staff_id=current_staff["id"])
+    db.commit()
     return Response(code=201, status="ok", message="created").model_dump()
 
 

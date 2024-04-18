@@ -46,11 +46,16 @@ def update_product(db: Session, product_id: UUID, product: Products_schema):
     return
 
 
-def update_product_weight(
-    db: Session, product_id: UUID, product_weight: Products_weight_schema
-):
+def update_product_weight(db: Session, product_id: UUID, product_weight: int):
     _product = get_product_by_id(db, product_id)
-    _product.weight += product_weight.weight
+    _product.weight += product_weight
     _product.updated_at = datetime.now()
     db.commit()
+    return
+
+
+def update_product_weight_for_order(db: Session, product_id: UUID, product_weight: int):
+    _product = get_product_by_id(db, product_id)
+    _product.weight = product_weight
+    _product.updated_at = datetime.now()
     return

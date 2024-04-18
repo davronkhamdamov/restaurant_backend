@@ -61,7 +61,7 @@ def update_product_rout(
     db: Session = Depends(get_db),
     _=Depends(get_current_staff),
 ):
-    update_product_weight(db, product_id, product_weight)
+    update_product_weight(db, product_id, product_weight.weight)
     return Response(code=200, status="ok", message="updated")
 
 

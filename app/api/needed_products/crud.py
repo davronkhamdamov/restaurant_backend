@@ -18,6 +18,10 @@ def get_needed_product_by_id(db: Session, needed_product_id: UUID):
     )
 
 
+def get_needed_product_by_meat_id(db: Session, meat_id: UUID):
+    return db.query(Needed_products).filter(Needed_products.meat_id == meat_id).all()
+
+
 def create_needed_product(db: Session, needed_product: Needed_product_schema):
     _needed_products = Needed_products(
         product_id=needed_product.meat_id,

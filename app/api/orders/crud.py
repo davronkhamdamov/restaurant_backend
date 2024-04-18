@@ -32,7 +32,6 @@ def create_order(db: Session, orders: List[Orders_schema], staff_id: UUID):
             created_at=datetime.now(),
         )
         db.add(_order)
-        db.commit()
     return
 
 
