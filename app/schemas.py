@@ -63,10 +63,11 @@ class Meats_schema(BaseModel):
 
 
 class Orders_schema(BaseModel):
-    id: UUID
-    order_id: str
-    status: str
-    price: str
-    meat_id: UUID
+    id: UUID = None
+    order_id: str = None
+    status: str = None
+    price: int = None
+    meat_id: UUID = None
+    count: int = None
     created_at: str = None
     updated_at: str = None

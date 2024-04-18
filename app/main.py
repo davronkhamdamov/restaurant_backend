@@ -1,6 +1,7 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
+
 from app.api.auth.router import router as auth_router
 from app.api.staffs.router import router as staff_router
 from app.api.meat.router import router as meat_router
@@ -18,6 +19,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 app.include_router(router=auth_router, prefix="/auth", tags=["Auth"])
 app.include_router(router=staff_router, prefix="/staff", tags=["Staff"])

@@ -50,6 +50,7 @@ class Orders(Base):
     order_id = Column(Integer, autoincrement=True)
     status = Column(String, default="Kutilmoqda")
     price = Column(Integer, nullable=False)
+    count = Column(Integer, nullable=False)
     staff_id = Column(UUID, ForeignKey("staffs.id"))
     meat_id = Column(UUID, ForeignKey("meats.id"))
     created_at = Column(DateTime, default=datetime.datetime.now)
