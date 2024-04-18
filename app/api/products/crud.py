@@ -20,6 +20,7 @@ def create_product(db: Session, product: Products_schema):
         price=product.price,
         img_url=product.img_url,
         weight=product.weight,
+        weight_type=product.weight_type,
         created_at=datetime.now(),
     )
     db.add(_product)
@@ -39,6 +40,7 @@ def update_product(db: Session, product_id: UUID, product: Products_schema):
     _product.name = product.name
     _product.price = product.price
     _product.weight = product.weight
+    _product.weight_type = product.weight_type
     _product.updated_at = datetime.now()
     db.commit()
     return
