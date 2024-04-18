@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from uuid import UUID
 from app.db import get_db
@@ -12,11 +12,36 @@ from app.api.orders.crud import (
     create_order,
     delete_order,
     update_order,
+    get_orders_for_maker,
 )
 from app.api.products.crud import update_product_weight_for_order, get_product_by_id
 from app.api.needed_products.crud import get_needed_product_by_meat_id
 
 router = APIRouter()
+
+
+@router.get("/make")
+def get_all_orders_route(
+    db: Session = Depends(get_db),
+    _=Depends(get_current_staff),
+):
+    _orders = get_orders_for_maker(db)
+    result = [
+        {
+            "id": order.id,
+            "img_url": meat.img_url,
+            "status": order.status,
+            "name": meat.name,
+            "price": order.price,
+            "count": order.count,
+            "created_at": order.created_at,
+            "updated_at": order.updated_at,
+        }
+        for order, meat in _orders
+    ]
+    return Response(
+        code=200, status="ok", message="success", result=result
+    ).model_dump()
 
 
 @router.get("/{order_id}")
@@ -44,6 +69,8 @@ def get_all_orders_route(
             "name": meat.name,
             "price": order.price,
             "count": order.count,
+            "created_at": order.created_at,
+            "updated_at": order.updated_at,
         }
         for order, meat in _orders
     ]

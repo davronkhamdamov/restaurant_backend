@@ -13,7 +13,17 @@ def get_orders(db: Session, staff_id: UUID):
         .join(Meats, Orders.meat_id == Meats.id)
         .filter(Orders.staff_id == staff_id)
         .filter(Orders.status != "Tugatildi")
-        .order_by(Orders.updated_at.desc())
+        .order_by(Orders.created_at.asc())
+        .all()
+    )
+
+
+def get_orders_for_maker(db: Session):
+    return (
+        db.query(Orders, Meats)
+        .join(Meats, Orders.meat_id == Meats.id)
+        .filter(Orders.status != "Tugatildi")
+        .order_by(Orders.created_at.asc())
         .all()
     )
 
